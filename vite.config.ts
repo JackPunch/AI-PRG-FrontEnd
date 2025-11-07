@@ -13,5 +13,7 @@ export default defineConfig({
   },
   server: {
     allowedHosts: ["kxxppzvfluvo.sealoshzh.site", "localhost"],
+    // host: "0.0.0.0",
+    // port: 8080,
   },
 });
