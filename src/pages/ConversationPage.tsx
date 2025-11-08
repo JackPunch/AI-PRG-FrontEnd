@@ -22,6 +22,9 @@ export default function ConversationPage() {
           <Message from={"user"}>
             <MessageContent>Hi there!</MessageContent>
           </Message>
+          <Message from={"assistant"}>
+            <MessageContent>Hi there!</MessageContent>
+          </Message>
         </ConversationContent>
         <ConversationScrollButton />
       </Conversation>
