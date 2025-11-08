@@ -30,7 +30,7 @@ import {
 const items = [
   {
     title: "生成剧本",
-    url: "/generate",
+    url: "/",
     icon: Home,
   },
   {
