@@ -1,9 +1,15 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
+import { useState } from "react";
 import type { FormEvent } from "react";
 
-function FirstInput() {
+interface FirstInputProps {
+  onSubmit: (input: string) => void;
+}
+
+function FirstInput({ onSubmit }: FirstInputProps) {
+  const [input, setInput] = useState("");
   const navigate = useNavigate();
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -13,6 +19,7 @@ function FirstInput() {
 
     // 跳转到指定页面
     navigate("/chat"); // 相当于 <Link to="/success" />
+    onSubmit(input);
   }
 
   return (
@@ -40,10 +47,13 @@ function FirstInput() {
           <Input
             type="text"
             className="h-12 border-2 border-input rounded-xl"
+            value={input}
+            onChange={(e) => setInput(e.currentTarget.value)}
           />
           <Button
             type="submit"
             className="h-13 border-2 border-input rounded-xl font-bold text-lg cursor-pointer"
+            disabled={!input.trim()}
           >
             生成剧本
           </Button>
