@@ -6,19 +6,21 @@ import type { FormEvent } from "react";
 
 interface FirstInputProps {
   onSubmit: (input: string) => void;
+  addSession: () => void;
 }
 
-function FirstInput({ onSubmit }: FirstInputProps) {
+function FirstInput({ onSubmit, addSession }: FirstInputProps) {
   const [input, setInput] = useState("");
   const navigate = useNavigate();
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault(); // 阻止默认提交
     // 这里执行表单验证或API请求逻辑
-    console.log("表单已提交");
+    // console.log("表单已提交");
 
     // 跳转到指定页面
-    navigate("/chat"); // 相当于 <Link to="/success" />
+    navigate("/chat/loading..."); // 相当于 <Link to="/success" />
+    addSession();
     onSubmit(input);
   }
 
