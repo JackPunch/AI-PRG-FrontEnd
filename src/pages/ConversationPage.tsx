@@ -56,6 +56,15 @@ export default function ConversationPage({
         return (
           <Message from={"assistant"} key={message.id}>
             <MessageContent className="leading-6">
+              <Markdown>{message.content}</Markdown>
+            </MessageContent>
+          </Message>
+        );
+
+      case "typing":
+        return (
+          <Message from={"assistant"} key={message.id}>
+            <MessageContent className="leading-6">
               <Typed>{message.content}</Typed>
             </MessageContent>
           </Message>

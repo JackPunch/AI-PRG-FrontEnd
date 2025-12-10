@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router";
+import useTyping from "./useTyping";
 
 export interface Message {
   id: string;
-  role: "user" | "assistant";
+  role: "user" | "assistant" | "typing";
   content: string;
   sessionId?: string;
   conversationId?: string;
@@ -90,7 +91,7 @@ function useMessage(updateSessions: () => void) {
             ...prev,
             {
               id: uuidv4(),
-              role: "assistant",
+              role: "typing",
               content,
               sessionId,
               conversationId,
