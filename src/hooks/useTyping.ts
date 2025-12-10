@@ -8,9 +8,10 @@ export default function useTyping(content: string, typeSpeed: number = 100) {
     }
     setCurIndex((pre) => pre + 1);
     const timeoutId = setTimeout(typing, typeSpeed);
+    return () => clearTimeout(timeoutId);
   }, [curIndex, typeSpeed, len]);
   useEffect(() => {
-    typing();
+    return typing();
   }, [typing, curIndex]);
 
   return content.slice(0, curIndex);
