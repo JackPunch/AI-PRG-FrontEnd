@@ -13,12 +13,19 @@ import {
 import { useState, useEffect } from "react";
 import type { Message as MessageType } from "@/hooks/useMessage";
 import { useParams } from "react-router";
+import Markdown from "react-markdown";
+import useTyping from "@/hooks/useTyping";
 
 interface ConversationPageProps {
   messages: MessageType[];
   onClick: (input: string) => void;
   setCurrentSessionId: (sessionId: string) => void;
   getMessages: (sessionId: string) => void;
+}
+
+function Typed({ children }: { children: string }) {
+  const curContent = useTyping(children, 1000000000);
+  return <Markdown>{curContent}</Markdown>;
 }
 
 export default function ConversationPage({
@@ -48,7 +55,9 @@ export default function ConversationPage({
       case "assistant":
         return (
           <Message from={"assistant"} key={message.id}>
-            <MessageContent>{message.content}</MessageContent>
+            <MessageContent className="leading-6">
+              <Typed>{message.content}</Typed>
+            </MessageContent>
           </Message>
         );
     }
