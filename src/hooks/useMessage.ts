@@ -9,6 +9,13 @@ export interface Message {
   content: string;
   sessionId?: string;
   conversationId?: string;
+  stage?:
+    | "initialization"
+    | "clarification"
+    | "outline"
+    | "writing"
+    | "reActing"
+    | "complete";
 }
 
 function useMessage(updateSessions: () => void) {
@@ -95,6 +102,7 @@ function useMessage(updateSessions: () => void) {
               content,
               sessionId,
               conversationId,
+              stage: textObj.data.stage,
             },
           ]);
           if (isFirst) {

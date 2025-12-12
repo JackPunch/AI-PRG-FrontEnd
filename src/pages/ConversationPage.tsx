@@ -35,6 +35,15 @@ export default function ConversationPage({
   getMessages,
 }: ConversationPageProps) {
   const [input, setInput] = useState("");
+  let isCompleted = false;
+  if (
+    messages &&
+    messages.length > 0 &&
+    messages[messages.length - 1].stage &&
+    messages[messages.length - 1].stage === "complete"
+  ) {
+    isCompleted = true;
+  }
 
   const { sessionId } = useParams<{ sessionId: string }>();
   useEffect(() => {
@@ -79,29 +88,48 @@ export default function ConversationPage({
       }
     }
   }, []);
+
+  const promptInput = (
+    <PromptInput
+      onSubmit={(e) => {
+        e.preventDefault();
+        onClick(input);
+        setInput("");
+      }}
+    >
+      <PromptInputTextarea
+        value={input}
+        onChange={(e) => setInput(e.currentTarget.value)}
+        placeholder="Type your message..."
+      />
+      <PromptInputToolbar className="flex justify-end">
+        <PromptInputSubmit disabled={!input.trim()} />
+      </PromptInputToolbar>
+    </PromptInput>
+  );
+
+  const linkButton = (
+    <a
+      href="http://localhost:8000"
+      target="_blank"
+      className="w-full divide-y overflow-hidden rounded-xl border bg-background shadow-sm h-24"
+    >
+      <button
+        type="button"
+        className="w-full h-full divide-y overflow-hidden rounded-xl border bg-background shadow-sm cursor-pointer bg-green-400"
+      >
+        Go to Sillly Tavern
+      </button>
+    </a>
+  );
+
   return (
     <div className="flex flex-col justify-between h-[calc(100vh-2rem)] items-center w-11/12 m-auto">
       <Conversation className="relative w-full" style={{ height: "500px" }}>
         <ConversationContent>{conversation}</ConversationContent>
         <ConversationScrollButton />
       </Conversation>
-
-      <PromptInput
-        onSubmit={(e) => {
-          e.preventDefault();
-          onClick(input);
-          setInput("");
-        }}
-      >
-        <PromptInputTextarea
-          value={input}
-          onChange={(e) => setInput(e.currentTarget.value)}
-          placeholder="Type your message..."
-        />
-        <PromptInputToolbar className="flex justify-end">
-          <PromptInputSubmit disabled={!input.trim()} />
-        </PromptInputToolbar>
-      </PromptInput>
+      {isCompleted ? linkButton : promptInput}
     </div>
   );
 }
